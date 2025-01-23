@@ -10,10 +10,18 @@ export const useAppStore = defineStore("app", () => {
   const showChat = ref<boolean>(false)
   const isLoggedIn = ref<boolean>(false)
   const userData = ref<any>()
+  const token = ref<string>("")
 
   // Function to set the active tab
   const setUserData = (data: any) => {
     userData.value = data
+  }
+  const setLoginData = (data: any) => {
+    const { accessToken, user } = data
+    console.log('data from store', data);
+    
+    userData.value = user
+    token.value = accessToken
   }
   const setLoginStatus = (value: boolean) => {
     isLoggedIn.value = value
@@ -43,6 +51,8 @@ export const useAppStore = defineStore("app", () => {
     setSelectedChat,
     setLoginStatus,
     setUserData,
-    userData
+    userData,
+    token,
+    setLoginData
   }
 })

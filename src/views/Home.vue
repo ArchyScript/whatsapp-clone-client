@@ -13,7 +13,7 @@ const showChat = computed(() => useAppStore().showChat)
     <!--  max-w-screen-2xl  -->
     <!-- <div class="fixed top-0  left-0 w-full h-36 bg-white hidden md:block" /> -->
 
-    <div class="flex overflow-y-hidden md:min-w-[768px] border-4 border-purple-600 mx-auto h-full">
+    <div class="flex overflow-y-hidden md:min-w-[768px] border-4 mx-auto h-full">
       <transition name="slide-fade">
         <section
           class="h-full flex w-full md:w-1/3 min-w-[420px] lg:min-w-[460px]"

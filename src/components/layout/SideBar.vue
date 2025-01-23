@@ -15,8 +15,8 @@
           </div>
 
           <!-- active state -->
-          <span class="absolute inline-block right-0.5 top-0.5 h-2 w-2 rounded-full bg-green-400">
-          </span>
+          <!-- <span class="absolute inline-block right-0.5 top-0.5 h-2 w-2 rounded-full bg-green-400">
+          </span> -->
         </a-tooltip>
       </div>
 

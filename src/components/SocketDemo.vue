@@ -46,24 +46,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onUnmounted, onMounted } from "vue"
+import { ref, onUnmounted, onMounted, computed } from "vue"
 import { connectSocket, disconnectSocket, getSocket } from "@/infrastructures/socket"
+import { useAppStore } from "@/stores/app"
+import { io } from "socket.io-client"
+import { useSocket } from "@/composables/useSocket"
 
 const userId = ref("")
 const connected = ref(false)
 const messages = ref<{ id: string; text: string }[]>([])
 
-import { io } from "socket.io-client"
+const token = computed(() => useAppStore().token)
 
-// let socket = getSocket()
-const socket = io(SOCKET_URL, {
-  query: { userId: "exampleUserId" },
-  // {
-  extraHeaders: {
-    Authorization: `Bearer ${userToken}`
-    // },
-  }
-})
+const { socket } = useSocket(token.value)
+
+// const socket = io(SOCKET_URL, {
+//   extraHeaders: {
+//     Authorization: `Bearer ${token}`
+//   }
+// })
 
 // const connectToSocket = () => {
 //   if (!userId.value) {
@@ -87,49 +88,52 @@ const socket = io(SOCKET_URL, {
 //   }
 // }
 
-const connectToSocket = () => {
-  if (!userId.value) {
-    console.log("Please enter a User ID.")
-    return
-  }
+// const connectToSocket = () => {
+//   if (!userId.value) {
+//     return console.log("Please enter a User ID.")
+//   }
 
-  socket = connectSocket(userId.value)
-  connected.value = true
+//   socket = connectSocket(userId.value)
+//   connected.value = true
 
-  // Listen for incoming messages
-  socket?.on("message", (message: string) => {
-    messages.value.push(message)
-  })
-}
+//   // Listen for incoming messages
+//   socket?.on("message", (message: string) => {
+//     messages.value.push(message)
+//   })
+// }
 
-const sendMessage = (message: string) => {
-  socket?.emit("message", message)
-}
-
-const SOCKET_URL = "http://localhost:5000" // Replace with your server URL
+// const sendMessage = (message: string) => {
+//   socket?.emit("message", message)
+// }
 
 // const socket = io(SOCKET_URL, {
 //   query: { userId: "exampleUserId" } // Pass userId or other connection details
 // })
 
 // Optional: log connection status
-socket.on("connect", () => {
-  console.log("Connected to server with ID:", socket.id)
+// socket.on("connect", () => {
+//   // console.log("client", new Date().toLocaleString())
+//   // console.log("client milli", new Date().getMilliseconds())
 
-  console.log("client", new Date().toLocaleString())
-  console.log("client milli", new Date().getMilliseconds())
-  // Emit login event
-  // socket.emit("login", socket.id)
-})
+//   // Emit login event
+//   socket.emit("login", {
+//     token,
+//     socketId: socket.id
+//   })
+// })
 
-onMounted(() => {
-  console.log("mounted socket")
-})
-onUnmounted(() => {
-  if (socket) {
-    socket.disconnect()
-  }
-})
+// onMounted(() => {
+//   console.log("mounted socket")
+
+//   socket.on("login", data => {
+//     console.log("Received event data:", data)
+//   })
+// })
+// onUnmounted(() => {
+//   if (socket) {
+//     socket.disconnect()
+//   }
+// })
 </script>
 
 <style scoped>

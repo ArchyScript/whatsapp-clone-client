@@ -3,7 +3,8 @@
     <!-- <NoChat /> -->
     <Login v-if="!isLoggedIn" />
 
-    <SocketDemo v-else />
+    <ChatTest v-else />
+    <!-- <SocketDemo v-else /> -->
     <!-- <MessageContainer v-else /> -->
   </div>
 </template>
@@ -12,6 +13,7 @@
 import { ref, computed } from "vue"
 import { NoChat, MessageContainer } from "@/components/RightPanel"
 import SocketDemo from "@/components/SocketDemo.vue"
+import ChatTest from "@/components/ChatTest.vue"
 import { useAppStore } from "@/stores/app"
 import { Login } from "@/components/Auth"
 

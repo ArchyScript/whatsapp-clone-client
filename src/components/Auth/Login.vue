@@ -6,13 +6,17 @@
       <form @submit.prevent="handleLogin" class="mt-6 space-y-4">
         <div>
           <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-          <input
-            type="email"
+          <select
             id="email"
-            v-model="form.email"
-            placeholder="Enter your email"
+            v-model="selectedAccount"
+            @change="updateFormFields"
             class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200"
-          />
+          >
+            <option value="" disabled>Select an account</option>
+            <option v-for="account in accounts" :key="account.email" :value="account.email">
+              {{ account.email }}
+            </option>
+          </select>
         </div>
         <div>
           <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
@@ -67,15 +71,27 @@
 import { login } from "@/infrastructures/api"
 import { reactive, ref } from "vue"
 import { useAppStore } from "@/stores/app"
-const { setLoginStatus } = useAppStore()
+const { setLoginStatus, setLoginData } = useAppStore()
 
-const { setUserData } = useAppStore()
-
+const selectedAccount = ref("")
+const accounts = ref([
+  { email: "scripted@mail.com", password: "Scripted@10" },
+  { email: "archyscript@mail.com", password: "ArchyScript@10" },
+  { email: "archyscripted@mail.com", password: "ArchyScripted@10" }
+])
+const updateFormFields = () => {
+  console.log("selectedAccount", selectedAccount.value)
+  const account = accounts.value.find(acc => acc.email === selectedAccount.value)
+  if (account) {
+    form.email = account.email
+    form.password = account.password
+  }
+}
 // Define the form state
-const form = reactive({ email: "scripted@mail.com", password: "Scripted@10" })
+const form = reactive({ email: "", password: "" })
 
 const loading = ref(false)
-const showPassword = ref(false)
+const showPassword = ref(true)
 const togglePassword = () => {
   showPassword.value = !showPassword.value
 }
@@ -93,7 +109,7 @@ const handleLogin = async () => {
   console.log("response", response)
 
   setLoginStatus(true)
-  setUserData(response.user)
+  setLoginData(response.data)
 }
 </script>
 
