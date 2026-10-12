@@ -1,8 +1,8 @@
 <template>
   <div class="flex  space-x-3 ">
     <span v-for="tab in tabs" :key="tab.title" @click="handleSelectTab(tab.title)"
-      class="py-1 px-3 focus:outline-none w-fit   bg-[#202C33] hover:bg-opacity-80 text-gray-500  rounded-2xl capitalize text-sm font-medium transition duration-300 ease-in-out"
-      role="button" :class="activeTabTitle === tab.title && '!bg-[#0A332C] text-[#057D3D] '">
+      class="py-1 px-3 focus:outline-none w-fit bg-whatsapp-header hover:bg-opacity-80 text-gray-500 rounded-2xl capitalize text-sm font-medium transition duration-300 ease-in-out"
+      role="button" :class="activeTabTitle === tab.title && '!bg-whatsapp-accentDeep text-whatsapp-accent'">
       {{ tab.title }}
     </span>
   </div>

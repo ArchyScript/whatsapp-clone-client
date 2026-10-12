@@ -1,63 +1,40 @@
 <template>
-  <div class="flex flex-col items-center m-auto p-10">
-    <!-- Image Section -->
-    <div class="mb-6  ">
-      <img class="w-80" alt="WhatsApp" src="https://static.whatsapp.net/rsrc.php/v3/y6/r/wa669aeJeom.png" />
+  <div class="m-auto flex max-w-2xl flex-col items-center px-8 py-12 text-center">
+    <div class="mb-6 rounded-[28px] border border-whatsapp-stroke bg-whatsapp-panel/80 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.3)]">
+      <img class="w-72" alt="WhatsApp" src="https://static.whatsapp.net/rsrc.php/v3/y6/r/wa669aeJeom.png" />
     </div>
 
-    <!-- Main Text Section -->
-    <div class="text-center space-y-3">
-      <h1 class="text-2xl font-medium text-gray-600">Download WhatsApp for Windows</h1>
-      <p class="text-gray-600 w-3/4 mx-auto">
-        Make calls, share your screen, and get a faster experience when you download the
-        Windows app.
+    <div class="space-y-4">
+      <h1 class="text-3xl font-semibold text-white">Frontend first, backend next</h1>
+      <p class="mx-auto max-w-xl text-sm leading-7 text-whatsapp-icon md:text-base">
+        Select a chat on the left to explore the interface. Messages stay local for now, which
+        makes this a good place to learn layout, state management, and component structure before
+        we start wiring real server behavior.
       </p>
 
-      <!-- Button Section -->
-      <div class="mt-4">
-        <button class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">
-          Get from Microsoft Store
-        </button>
-      </div>
-
-      <div class="mt-4">
-        <button @click="signin"
-          class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">
-          Login
-        </button>
+      <div class="grid gap-3 pt-4 text-left md:grid-cols-3">
+        <div class="rounded-2xl border border-whatsapp-stroke bg-whatsapp-panelAlt p-4">
+          <h2 class="mb-2 font-medium text-white">UI flow</h2>
+          <p class="text-sm leading-6 text-whatsapp-icon">Sidebar, chat list, selected conversation, and responsive mobile behavior.</p>
+        </div>
+        <div class="rounded-2xl border border-whatsapp-stroke bg-whatsapp-panelAlt p-4">
+          <h2 class="mb-2 font-medium text-white">Frontend state</h2>
+          <p class="text-sm leading-6 text-whatsapp-icon">Pinia stores hold selected chats, draft messages, and mock conversation history.</p>
+        </div>
+        <div class="rounded-2xl border border-whatsapp-stroke bg-whatsapp-panelAlt p-4">
+          <h2 class="mb-2 font-medium text-white">Server prep</h2>
+          <p class="text-sm leading-6 text-whatsapp-icon">Once the client feels solid, we can replace mock data with APIs and sockets piece by piece.</p>
+        </div>
       </div>
     </div>
 
-    <!-- Footer Section -->
-    <div class="flex items-center mt-4 text-gray-500 text-sm">
+    <div class="mt-8 flex items-center text-sm text-whatsapp-muted">
       <Icon name="lock-small" class="!h-3" />
       <span class="ml-2">Your personal messages are end-to-end encrypted</span>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { signup, login } from '@/infrastructures/api'
-
-const register = async () => {
-  const response = await signup({
-    username: "Tungii",
-    password: "Tioajh@10",
-    phoneNumber: '567893462653',
-    email: 'yung@email.com'
-  })
-
-  console.log('response', response)
-}
-
-const signin = async () => {
-  const response = await login({
-    email: 'yung@email.com',
-    password: "Tioajh@10",
-  })
-
-  console.log('response', response)
-}
-</script>
+<script setup lang="ts"></script>
 
 <style scoped></style>

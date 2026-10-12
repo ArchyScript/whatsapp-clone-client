@@ -41,18 +41,18 @@
   }
   html,
   body {
-    @apply bg-[#0C1317]   overflow-y-hidden;
+    @apply bg-whatsapp-app overflow-y-hidden;
   }
 }
 
 /* Ant Design */
 /* Tooltip */
 .ant-tooltip-inner {
-  @apply !bg-[#202C33] !text-white;
+  @apply !bg-whatsapp-header !text-white;
 }
 .ant-tooltip .ant-tooltip-arrow::before,
 .ant-tooltip .ant-tooltip-arrow::after {
-  @apply !bg-[#202C33];
+  @apply !bg-whatsapp-header;
 }
 
 /*   DARK MODE THIN SCROLLBAR */
@@ -75,12 +75,12 @@
     width: 0px;
   }
   ::-webkit-scrollbar-thumb {
-    background-color: #333936;
+    background-color: theme("colors.whatsapp.scrollbar");
     margin: 2px;
-    border: 3px solid #0c1317;
+    border: 3px solid theme("colors.whatsapp.app");
   }
 
   ::-webkit-scrollbar-track {
-    background-color: #0c1317 !important;
+    background-color: theme("colors.whatsapp.app") !important;
   }
 }

@@ -1,6 +1,6 @@
 // tailwind.config.js
 module.exports = {
-  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   darkMode: ['class'],
   theme: {
     container: {
@@ -11,6 +11,26 @@ module.exports = {
     },
     extend: {
       colors: {
+        whatsapp: {
+          app: '#0C1317',
+          sidebar: '#0B141A',
+          panel: '#111B21',
+          panelAlt: '#182229',
+          header: '#202C33',
+          divider: '#203038',
+          stroke: '#233138',
+          hover: '#2A3942',
+          active: '#374248',
+          scrollbar: '#333936',
+          muted: '#8696A0',
+          icon: '#AEBAC1',
+          textSoft: '#D1D7DB',
+          bubbleOut: '#005C4B',
+          bubbleOutText: '#D9FDD3',
+          bubbleRead: '#53BDEB',
+          accent: '#057D3D',
+          accentDeep: '#0A332C'
+        },
         border: {
           light: 'var(--border-light)',
           dark: 'var(--border-dark)',

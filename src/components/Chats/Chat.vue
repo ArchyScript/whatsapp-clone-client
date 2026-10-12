@@ -34,7 +34,7 @@ const selectChat = () => {
 
 <template>
   <div
-    class="flex items-center truncate hover:bg-[#2A3942] cursor-pointer select-none"
+    class="flex items-center truncate hover:bg-whatsapp-hover cursor-pointer select-none"
     @click="selectChat"
   >
     <!-- Image container -->

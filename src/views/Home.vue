@@ -1,35 +1,49 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue"
-import { SideBar, LeftPanel, RightPanel } from "@/components/layout"
-
-import { useAppStore } from "@/stores/app"
-const { setShowChat } = useAppStore()
+import { computed, onBeforeUnmount, onMounted, ref } from "vue"
+import { SideBar, LeftPanel, RightPanel } from "@/components/layout" 
+import { useAppStore } from   "@/stores/app"  
 
 const showChat = computed(() => useAppStore().showChat)
+
+const isDesktop = ref(false)
+const mediaQuery = window.matchMedia("(min-width: 768px)")
+
+const updateIsDesktop = () => {
+  isDesktop.value = mediaQuery.matches
+}
+
+onMounted(() => {
+  updateIsDesktop()
+  mediaQuery.addEventListener("change", updateIsDesktop)
+})
+
+onBeforeUnmount(() => {
+  mediaQuery.removeEventListener("change", updateIsDesktop)
+})
+
+const showLeftPanel = computed(() => isDesktop.value || !showChat.value)
+const showRightPanel = computed(() => isDesktop.value || showChat.value)
 </script>
 
 <template>
-  <div class="overflow-y-hidden bg-[#0C1317] md:p-6 container mx-auto h-screen w-full">
-    <!--  max-w-screen-2xl  -->
-    <!-- <div class="fixed top-0  left-0 w-full h-36 bg-white hidden md:block" /> -->
-
-    <div class="flex overflow-y-hidden md:min-w-[768px] border-4 border-purple-600 mx-auto h-full">
+  <div class="mx-auto flex h-screen w-full max-w-[1600px] overflow-hidden bg-whatsapp-app md:p-4">
+    <div
+      class="flex h-full w-full overflow-hidden rounded-none border border-whatsapp-divider bg-whatsapp-panel shadow-[0_24px_80px_rgba(0,0,0,0.35)] md:rounded-[28px]"
+    >
       <transition name="slide-fade">
-        <section
-          class="h-full flex w-full md:w-1/3 min-w-[420px] lg:min-w-[460px]"
-          :class="showChat && 'hidden md:flex'"
-        >
-          <div class="w-16 h-full">
+        <section v-show="showLeftPanel" class="flex h-full w-full md:w-[30rem] md:min-w-[26rem]">
+          <div class="h-full w-16 border-r border-whatsapp-divider bg-whatsapp-sidebar">
             <SideBar />
           </div>
 
-          <div class="h-full flex-1 truncate">
+          <div class="h-full flex-1 truncate border-r border-whatsapp-divider">
             <LeftPanel />
           </div>
         </section>
       </transition>
+
       <transition name="slide-fade">
-        <section class="h-full w-full flex-1 hidden md:block" :class="showChat && '!block '">
+        <section v-show="showRightPanel" class="h-full flex-1">
           <RightPanel />
         </section>
       </transition>
@@ -41,10 +55,10 @@ const showChat = computed(() => useAppStore().showChat)
 /* Animation for sliding and fading */
 .slide-fade-enter-active,
 .slide-fade-leave-active {
-  transition: all 0.6s ease;
+  transition: all 0.25s ease;
 }
 .slide-fade-enter-from {
-  transform: translateX(-100%);
+  transform: translateX(-24px);
   opacity: 0;
 }
 .slide-fade-enter-to {
@@ -56,7 +70,7 @@ const showChat = computed(() => useAppStore().showChat)
   opacity: 1;
 }
 .slide-fade-leave-to {
-  transform: translateX(100%);
+  transform: translateX(24px);
   opacity: 0;
 }
 </style>

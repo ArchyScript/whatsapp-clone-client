@@ -5,9 +5,9 @@
       <div v-for="link in sideBarTabs" class="relative">
         <a-tooltip :title="link.title" placement="right">
           <div
-            class="w-10 h-10 cursor-pointer rounded-full flex justify-center items-center text-[#AEBAC1] transition duration-300 ease-in-out"
+            class="w-10 h-10 cursor-pointer rounded-full flex justify-center items-center text-whatsapp-icon transition duration-300 ease-in-out"
             :class="{
-              'bg-[#374248]': link.title === activeTab
+              'bg-whatsapp-active': link.title === activeTab
             }"
             @click="selectTab(link.title)"
           >
@@ -39,7 +39,7 @@
         <a-tooltip title="Toggle Mode" placement="right">
           <div
             @click="toggleDarkMode"
-            class="w-10 h-10 cursor-pointer rounded-full flex justify-center items-center text-[#AEBAC1] hover:bg-[#374248] transition duration-300 ease-in-out"
+            class="w-10 h-10 cursor-pointer rounded-full flex justify-center items-center text-whatsapp-icon hover:bg-whatsapp-active transition duration-300 ease-in-out"
           >
             <Icon name="settings" />
           </div>
@@ -50,9 +50,9 @@
         <a-tooltip title="Settings" placement="right">
           <div
             @click="selectTab('settings')"
-            class="w-10 h-10 cursor-pointer rounded-full flex justify-center items-center text-[#AEBAC1] hover:bg-[#374248] transition duration-300 ease-in-out"
+            class="w-10 h-10 cursor-pointer rounded-full flex justify-center items-center text-whatsapp-icon hover:bg-whatsapp-active transition duration-300 ease-in-out"
             :class="{
-              'bg-[#374248]': activeTab === 'settings'
+              'bg-whatsapp-active': activeTab === 'settings'
             }"
           >
             <Icon :name="activeTab === 'settings' ? 'settings' : 'settings-outline'" />

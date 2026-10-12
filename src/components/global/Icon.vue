@@ -1,58 +1,53 @@
 <script lang="ts" setup>
-import { ref, watchEffect, onMounted, computed, defineAsyncComponent } from "vue";
-import type { IconType } from '@/types'
-// Define the props for the component
+import { ref, watch } from "vue"
+
 interface Props {
-  name: string;
-  filled?: boolean;
-  size?: number;
+  name: string
+  filled?: boolean
+  size?: number
 }
 const props = withDefaults(defineProps<Props>(), {
   filled: true,
-  size: 24,
-});
+  size: 24
+})
 
-const hasStroke = ref(false);
-const icon = ref<string>("");
+const hasStroke = ref(false)
+const icon = ref("")
 
-// Fetch the SVG icon dynamically
 const fetchIcon = async () => {
   try {
-    const iconsImport = import.meta.glob("/src/assets/icons/**/*.svg", {
-      eager: false,
-      query: "?raw",
-      import: "default",
-    });
-
-    const iconPath = `/src/assets/icons/${props.name}.svg`;
-
-    if (!iconsImport[iconPath]) {
-      throw new Error(`Icon "${props.name}" not found`);
+    const response = await fetch(`/icons/${props.name}.svg`)
+    if (!response.ok) {
+      throw new Error(`Icon "${props.name}" not found`)
     }
 
-    const rawIcon = await iconsImport[iconPath]();
-    const iconSvgContent = rawIcon as string;
-
-    // Check if the icon contains a stroke
-    hasStroke.value = iconSvgContent.includes("stroke");
-    icon.value = iconSvgContent;
+    const iconSvgContent = await response.text()
+    hasStroke.value = iconSvgContent.includes("stroke")
+    icon.value = iconSvgContent
   } catch (error) {
-    // Handle the case where the icon is not found 
-    throw new Error(`Icon "${props.name}" not found`,);
+    hasStroke.value = false
+    icon.value = ""
+    throw new Error(`Icon "${props.name}" not found`)
   }
-};
+}
 
-// Fetch the icon when the component is mounted
-onMounted(() => fetchIcon());
-// Re-fetch the icon whenever the name prop changes
-watchEffect(() => fetchIcon()); 
+watch(
+  () => props.name,
+  () => {
+    void fetchIcon()
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
   <!-- Render the loaded SVG content -->
-  <span class="base-icon " :class="{ 'icon--fill': filled, 'icon--stroke': hasStroke && !filled }" v-html="icon"
-    :style="{ width: `${props.size}px`, height: `${props.size}px` }" />
-
+  <span
+    class="base-icon"
+    :class="{ 'icon--fill': filled, 'icon--stroke': hasStroke && !filled }"
+    v-html="icon"
+    :style="{ width: `${props.size}px`, height: `${props.size}px` }"
+  />
 </template>
 
 <style scoped>

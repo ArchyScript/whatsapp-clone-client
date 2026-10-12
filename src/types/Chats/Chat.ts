@@ -23,3 +23,11 @@ export interface ChatType {
 }
 
 export type ChatStatus = 'sent' | 'read' | 'delivered'
+
+export interface ChatMessage {
+  id: string
+  body: string
+  direction: "incoming" | "outgoing"
+  time: string
+  status?: ChatStatus
+}
